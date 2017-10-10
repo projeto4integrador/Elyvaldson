@@ -2,13 +2,14 @@ package com.integrador.projeto_comanda.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -30,11 +31,11 @@ public class Adicional {
 	@Column(name = "valor")
 	private double valor;
 
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	  @JoinTable(
 	      name="web_adicional_categoria",
-	      joinColumns= @JoinColumn(name="id_adicional", referencedColumnName="id"),
-	      inverseJoinColumns= @JoinColumn(name="id_categoria", referencedColumnName="id"))
+	      joinColumns= {@JoinColumn(name="id_categoria")},
+	      inverseJoinColumns= {@JoinColumn(name="id_adicional")})
 	private List<Categoria> categoria;
 	
 	public Adicional(Integer id,String descricao,double valor) {

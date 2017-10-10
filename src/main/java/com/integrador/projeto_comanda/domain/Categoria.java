@@ -2,6 +2,7 @@ package com.integrador.projeto_comanda.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,12 +28,12 @@ public class Categoria {
 	@Column(name = "descricao")
 	private String descricao;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToMany(mappedBy="categoria")
 	private List<Adicional> adicional;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "categoria")
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
 	private List<Produto> produto; 
 	
 	public Categoria() {
