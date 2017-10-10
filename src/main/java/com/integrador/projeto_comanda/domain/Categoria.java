@@ -1,11 +1,18 @@
 package com.integrador.projeto_comanda.domain;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "web_categoria")
@@ -13,11 +20,21 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	
 	@NotNull
+	@Column(name = "descricao")
 	private String descricao;
-
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy="categoria")
+	private List<Adicional> adicional;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "categoria")
+	private List<Produto> produto; 
+	
 	public Categoria() {
 	}
 
@@ -41,6 +58,22 @@ public class Categoria {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public List<Adicional> getAdicional() {
+		return adicional;
+	}
+
+	public void setAdicional(List<Adicional> adicional) {
+		this.adicional = adicional;
+	}
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
 	}
 
 	@Override

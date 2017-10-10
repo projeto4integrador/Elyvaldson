@@ -1,9 +1,15 @@
 package com.integrador.projeto_comanda.domain;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -13,14 +19,24 @@ public class Adicional {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 	
 	@NotNull
+	@Column(name = "descricao")
 	private String descricao;
 	
 	@NotNull
+	@Column(name = "valor")
 	private double valor;
 
+	@ManyToMany
+	  @JoinTable(
+	      name="web_adicional_categoria",
+	      joinColumns= @JoinColumn(name="id_adicional", referencedColumnName="id"),
+	      inverseJoinColumns= @JoinColumn(name="id_categoria", referencedColumnName="id"))
+	private List<Categoria> categoria;
+	
 	public Adicional(Integer id,String descricao,double valor) {
 		super();
 		this.id = id;		
@@ -39,12 +55,12 @@ public class Adicional {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public double getValor() {
@@ -54,6 +70,14 @@ public class Adicional {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
+	
+	public List<Categoria> getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(List<Categoria> categoria) {
+		this.categoria = categoria;
+	}	
 
 	@Override
 	public int hashCode() {
