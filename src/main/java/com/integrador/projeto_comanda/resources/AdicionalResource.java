@@ -9,30 +9,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.integrador.projeto_comanda.domain.Produto;
-import com.integrador.projeto_comanda.repositories.ProdutoRepository;
+import com.integrador.projeto_comanda.domain.Adicional;
+import com.integrador.projeto_comanda.repositories.AdicionalRepository;
 
 @RestController
-@RequestMapping("/produtos")
-public class ProdutoResource {
+@RequestMapping("/adicional")
+public class AdicionalResource {
 	
 	@Autowired
-	private ProdutoRepository produtoDAO;
+	private AdicionalRepository adicionalDAO;
 	
 	@GetMapping
-	public List<Produto> listar() {
-		List<Produto> produtos = produtoDAO.findAll();
-		System.out.println(produtos);
-		return produtos;
+	public List<Adicional> listar() {
+		return adicionalDAO.findAll();
 	}	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> buscarPeloCodigo(@PathVariable Long id){
+	public ResponseEntity<Adicional> buscarPeloCodigo(@PathVariable Long id){
 		
-		Produto produto = produtoDAO.findOne(id);
+		Adicional adicional = adicionalDAO.findOne(id);
 		
-		if(produto != null){
-			return ResponseEntity.ok().body(produto);
+		if(adicional != null){
+			return ResponseEntity.ok().body(adicional);
 		}else {
 			return ResponseEntity.notFound().build(); // retorna 404
 		}

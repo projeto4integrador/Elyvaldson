@@ -1,5 +1,6 @@
 package com.integrador.projeto_comanda.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,17 +16,19 @@ public class Produto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	
 	@NotNull
 	private String descricao;
 	
 	@NotNull
+	@Column(name="valor")
     private double valor;
 	
 	@NotNull
     private int situacao;
 	
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
@@ -34,7 +37,7 @@ public class Produto {
 		
 	}
 	
-	public Produto(Integer id,String descricao, double valor, int situacao, Categoria categoria) {
+	public Produto(Long id,String descricao, double valor, int situacao, Categoria categoria) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -43,11 +46,11 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

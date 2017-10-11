@@ -8,8 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,14 +28,18 @@ public class Categoria {
 	@NotNull
 	@Column(name = "descricao")
 	private String descricao;
-	
-	//@JsonIgnore
-	@ManyToMany(mappedBy="categoria")
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "web_adicional_categoria", joinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id"), 
+    inverseJoinColumns = @JoinColumn(name = "id_adicional", referencedColumnName = "id"))
 	private List<Adicional> adicional;
 	
+
+    /*	
 	@JsonIgnore
 	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-	private List<Produto> produto; 
+	private List<Produto> produto; */
 	
 	public Categoria() {
 	}
@@ -60,21 +65,13 @@ public class Categoria {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
+	
 	public List<Adicional> getAdicional() {
 		return adicional;
 	}
 
 	public void setAdicional(List<Adicional> adicional) {
 		this.adicional = adicional;
-	}
-
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
 	}
 
 	@Override
