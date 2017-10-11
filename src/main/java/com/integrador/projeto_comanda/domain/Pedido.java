@@ -1,9 +1,13 @@
 package com.integrador.projeto_comanda.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,15 +27,19 @@ public class Pedido {
 	@NotNull
 	private StatusPedido estado;
 	
+	@OneToMany(mappedBy = "id.pedido")
+	private List<ItemPedido> itens = new LinkedList<>();
+	
 	public Pedido() {
 		
 	}
 
-	public Pedido(Integer id, Double valor, StatusPedido estado) {
+	public Pedido(Integer id, Double valor, StatusPedido estado, ItemPedido item) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.estado = estado;
+		this.itens.add(item);
 	}
 
 	public Integer getId() {
@@ -56,6 +64,14 @@ public class Pedido {
 
 	public void setEstado(StatusPedido estado) {
 		this.estado = estado;
+	}
+
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	@Override

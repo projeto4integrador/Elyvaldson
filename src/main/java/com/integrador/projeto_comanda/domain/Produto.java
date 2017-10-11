@@ -1,5 +1,8 @@
 package com.integrador.projeto_comanda.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "web_produto")
@@ -32,6 +38,10 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.produto")
+	private List<ItemPedido> itens = new LinkedList<>();
 
 	public Produto(){
 		
@@ -44,6 +54,15 @@ public class Produto {
 		this.valor = valor;
 		this.situacao = situacao;
 		this.categoria = categoria;
+	}
+	
+	@JsonIgnore
+	public List<Pedido> getPedidos(){
+		List<Pedido> list = new LinkedList<>();
+		for(ItemPedido x : this.itens) {
+			list.add(x.getPedido());
+		}
+		return list;
 	}
 
 	public Long getId() {
@@ -84,6 +103,14 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	@Override
