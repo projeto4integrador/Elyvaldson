@@ -29,4 +29,3 @@ projeto-comanda (PROJETO)<br>
 ------------ V02__cria_e_registra_produtos.sql <br />
 ------ application.properties (ARQUIVO DE CONFIGURACAO) <br />
 --- pom.xml (TODAS AS DEPENDENCIAS DO PROJETO) <br />
-# eduardo
